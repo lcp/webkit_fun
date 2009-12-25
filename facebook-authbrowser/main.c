@@ -1,18 +1,21 @@
 #include <gtk/gtk.h>
 #include <libsoup/soup.h>
 #include "webkit.h"
+#include "session_parse.h"
 
 static void
 back_cb (const gchar* uri)
 {
-    GHashTable *form;
+    GHashTable *form, *session;
     gchar **split_str = g_strsplit (uri, "?", 2);
     form = soup_form_decode (split_str[1]);
 
     GHashTableIter iter;
     gpointer key, value;
 
-    g_hash_table_iter_init (&iter, form);
+    session = session_parse (g_hash_table_lookup (form, "session"));
+
+    g_hash_table_iter_init (&iter, session);
     while(g_hash_table_iter_next(&iter, &key, &value)) {
         g_print("key\t: %s\nvalue\t: %s\n\n", (char *)key , (char *)value);
     }

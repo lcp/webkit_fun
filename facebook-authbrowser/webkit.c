@@ -42,7 +42,7 @@ load_commit_cb (WebKitWebView* page, WebKitWebFrame* frame, gpointer data)
     const gchar* uri = webkit_web_frame_get_uri(frame);
 
     if (g_strrstr (uri, stop_url)){
-        gtk_widget_destroy (main_window);
+        gtk_widget_hide (GTK_WIDGET (page));
         backurl_cb (uri);
     }
 }

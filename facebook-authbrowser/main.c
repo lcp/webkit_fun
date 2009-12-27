@@ -30,7 +30,13 @@ main (int argc, char* argv[])
 
     gchar* uri;
     uri = "http://www.facebook.com/login.php?api_key=d012235b3034109003451109a1926eee&connect_display=popup&v=1.0&fbconnect=true&return_session=true&session_key_only=true&req_perms=read_stream,publish_stream,offline_access";
-    open_url_with_webkit(uri, "http://www.facebook.com/?session=", back_cb);
+    UrlInfo info;
+    urlinfo_init (&info);
+
+    info.stop_url = "http://www.facebook.com/?session=";
+    info.session_handler = back_cb;
+
+    open_url_with_webkit(&info, uri);
 
     gtk_main ();
 
